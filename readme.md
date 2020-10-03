@@ -1,7 +1,7 @@
 # CAC Control Center (CCC)
 ## For beginners & ressources
 
-See the [startupGuide.odt](./startupGuide.odt) document for quick start guide about Pioneer autochangers hardware.
+See the [startupGuide.pdf](./startupGuide.pdf) document for quick start guide about Pioneer autochangers hardware.
 
 Official user manuals are located in the [manuals](./manuals/) directory.
 Serial programming manuals are located in the [programming](./programming/) directory.
