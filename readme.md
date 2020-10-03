@@ -23,9 +23,9 @@ To understand CCC modules take a look at them (low level to high level) :
 
 | module | description|
 |-|-|
-| pivot | Node.js script which start a server to control a jukebox via RS-232/422 through a websocket in web browsers.|
-| launcher | Perl script to easily manage (start/status/stop) pivot instances like a Linux deamon.|
-| tester | Static english web HTML/CSS/JS application to test and debug Node.js pivot instances.|
+| [pivot](https://github.com/duprej/cccpivot) | Node.js script which start a server to control a jukebox via RS-232/422 through a websocket in web browsers.|
+| [launcher](https://github.com/duprej/ccclauncher) | Perl script to easily manage (start/status/stop) pivot instances like a Linux deamon.|
+| [tester](https://github.com/duprej/ccctester) | Static english web HTML/CSS/JS application to test and debug Node.js pivot instances.|
 | controller | Static web HTML/CSS/JS application to control jukebox players (like DJ controller).|
 | web | Big application with Postgres database connection and persistance.|
 
