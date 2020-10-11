@@ -95,7 +95,7 @@ do
 	for speed in $speedsAllowed
 	do
 		exec 6<&0
-		echo -n "Applying stty settings for ${speed} bps... "
+		echo -n "Applying stty settings for ${speed} bps..."
 		stty -F /dev/${device} $speed cs8 -cstopb -parenb ignpar -inlcr icrnl -ixon -ixoff
 		if [ "$?" -ne "0" ]
 		then
@@ -128,9 +128,9 @@ do
 		else
 			if [[ $reply = *[![:ascii:]]* ]]
 			then
-				echo ":-( Autochanger replied but with fuzzy chars at ${speed}bps."
+				echo ":-( Autochanger replied but with fuzzy chars at ${speed} bps."
 			else
-				echo ":-) The autochanger replied correctly with '$reply' at ${speed}bps."
+				echo ":-) The autochanger replied correctly with '$reply' at ${speed} bps."
 				success=1
 				doTest=0
 				break
@@ -140,7 +140,7 @@ do
 	if [ $success -eq 0 ]
 	then
 		echo "Dialogue with Pioneer autochanger FAILED!"
-		echo "Verification Hints and Troubleshooting :"
+		echo "Verification Hints and Troubleshooting:"
 		echo -e "\t- Check autochanger power."
 		echo -e "\t- Check serial cable connection."
 		echo -e "\t- For V3000 & V3200 models : "
