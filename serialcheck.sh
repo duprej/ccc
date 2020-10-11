@@ -4,10 +4,15 @@
 ###  Author:		Jonathan DUPRE
 ###  GitHub:		duprej
 ###  Commands :  	udevadm / stty
-###  Created at :  	09/30/2020 - 1 - Initial
-###
+###  Created at :  	09/30/2020 - 1.0 - Initial
+###  Created at :  	10/11/2020 - 1.1 - Do not work, now it's ok :)
+###                                  - More hints and helps (user-friendly)
+###                                  - Better tolerance to question answers
+###                                  - Adaptive wait time in manual mode
+###                                    (CM3 vs CM7).
+
 ### ####################################################################### ###
-SVERSION=1
+SVERSION=1.1
 echo -e "Welcome to CCC autochanger serial checker script v${SVERSION} for Linux.\n"
 if ! command -v udevadm &> /dev/null
 then
@@ -74,10 +79,12 @@ then
 	# This model only use 4800bps, no need to ask the speed.
 	speedsAllowed="4800"
 	nbrSpeeds=1
+	waitTimeoutCommand=16
 	echo "Speed set to 4800bps."
 else
 	speedsAllowed="9600 4800"
 	nbrSpeeds=2
+	waitTimeoutCommand=1
 	echo "Multiple speed testing mode."
 fi
 # Test part
@@ -87,8 +94,9 @@ while [ $doTest -eq 1 ]
 do
 	for speed in $speedsAllowed
 	do
-		echo -n "Applying stty settings for ${speed}bps... "
-		stty -F /dev/${device} $speed cs8 -cstopb -parenb icrnl
+		exec 6<&0
+		echo -n "Applying stty settings for ${speed} bps... "
+		stty -F /dev/${device} $speed cs8 -cstopb -parenb ignpar -inlcr icrnl -ixon -ixoff
 		if [ "$?" -ne "0" ]
 		then
 			echo "KO. Problem with stty command."
@@ -108,13 +116,15 @@ do
 			command='1PS?X'
 		fi
 		echo -n "Trying to communicate with the autochanger... "
+		exec <> /dev/${device}
 		echo -e "$command\\r" > /dev/${device}
 		echo "Command '$command' send, waiting for reply..."
-		read -t 1 reply < /dev/${device}
+		read -t 1 reply < /dev/${device} 
+		exec 0<&6 6<&-
 		reply=${reply//$'\r'/}
 		if [ -z $reply ]
 		then
-			echo ":-( The autochanger did not replied at ${speed}bps."
+			echo ":-( The autochanger did not replied at ${speed} bps."
 		else
 			if [[ $reply = *[![:ascii:]]* ]]
 			then
@@ -129,38 +139,51 @@ do
 	done
 	if [ $success -eq 0 ]
 	then
-		echo "Try again ? Y(es) or N(o)"
+		echo "Dialogue with Pioneer autochanger FAILED!"
+		echo "Verification Hints and Troubleshooting :"
+		echo -e "\t- Check autochanger power."
+		echo -e "\t- Check serial cable connection."
+		echo -e "\t- For V3000 & V3200 models : "
+		echo -e "\t\t- Be sure the first player address is 1 (factory setting - see manual page 14)."
+		echo -e "\t\t- Be sure the back "CONFIG." slider selector is on RS-232C position (= up)."
+		echo ""
+		echo "Try again ? Y(es) or any other key for no."
 		read -s -n 1 choice
-		if [[ $choice =~ ^[Nn]$ ]]
+		if [[ ! $choice =~ ^[Yy]$ ]]
 		then
 			echo "Goodbye."
 			exit 0
+		else
+			echo "Trying again..."
 		fi
 	fi
 done
 #REPL part
-echo "Do you want to send custom commands (manual mode) now? Y(es) or N(o)"
+echo "Dialogue with Pioneer autochanger SUCCEEDED!"
+echo "Do you want to send custom commands (manual mode) now? Y(es) or any other key for no."
 read -s -n 1 choice
-if [[ $choice =~ ^[Nn]$ ]]
+if [[ ! $choice =~ ^[Yy]$ ]]
 then
 	echo "Goodbye."
 	exit 0
 fi	
-echo "Manual mode entered. Type your command and press Enter (for each one).
+echo "Manual mode entered! Type your autochanger command and press Enter (for each one).
 Warning: All chars will be sent as is! There is no verification.
-Type 'exit' to terminate this program."
+Type 'exit' to terminate this program. Timeout for a command reply is set to $waitTimeoutCommand second(s)."
 while true
 do
+	exec 6<&0
 	read -p "Command: " command
 	if [ ! -z $command ]; then
 		if [ $command == 'exit' ]
 		then
-			echo "Manual mode exited."
 			break
 		fi
+		exec <> /dev/${device}
 		echo -e "$command\\r" > /dev/${device}
-		read -t5 reply < /dev/${device}
+		read -t${waitTimeoutCommand} reply < /dev/${device}
 		reply=${reply//$'\r'/}
+		exec 0<&6 6<&-
 		echo $reply
 	fi
 done

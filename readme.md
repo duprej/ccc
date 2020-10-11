@@ -67,7 +67,7 @@ This software/scripts are written to be used in a Linux environment. I planed to
 
 ## Usage
 * Install Linux with or without a Desktop Environment (prefer Ubuntu/Debian or Raspbian/Armbian) with bash and Perl.
-* Play with [serialcheck.sh](./serialcheck.sh).
+* Play with [serialcheck.sh](./serialcheck.sh) tool.
 * Install CCCpivot module (needs Node.js to be installed before)
 * Install CCClauncher module (needs Perl to be installed before)
     * Edit changers.csv (<- Add your autochangers here)
