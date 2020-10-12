@@ -2,17 +2,18 @@
 ### ####################################################################### ###
 ###
 ###  Author:		Jonathan DUPRE
-###  GitHub:		duprej
+###  GitHub:		https://github.com/duprej/ccc
 ###  Commands :  	udevadm / stty
 ###  Created at :  	09/30/2020 - 1.0 - Initial
-###  Created at :  	10/11/2020 - 1.1 - Do not work, now it's ok :)
+###  Revised on :  	10/11/2020 - 1.1 - Does not work, now it's ok :)
 ###                                  - More hints and helps (user-friendly)
 ###                                  - Better tolerance to question answers
 ###                                  - Adaptive wait time in manual mode
 ###                                    (CM3 vs CM7).
+###                 10/12/2020 - 1.2 - Various optimisations
 
 ### ####################################################################### ###
-SVERSION=1.1
+SVERSION=1.2
 echo -e "Welcome to CCC autochanger serial checker script v${SVERSION} for Linux.\n"
 if ! command -v udevadm &> /dev/null
 then
@@ -30,7 +31,7 @@ ports=`ls /dev/ | grep -e 'tty[AUS]'`
 nbrPorts=`ls -l /dev/ | grep -e 'tty[AUS]' | wc -l`
 if [ $nbrPorts == "0" ]
 then
-	echo -e "\nSorry no serial port found. Check machine. Exit."
+	echo -e "\nSorry no serial port found. Check machine."
 	exit 3
 else
 	echo -e "$nbrPorts found."
@@ -76,14 +77,12 @@ do
 done
 if [ $model = "CAC-V180M" ]
 then
-	# This model only use 4800bps, no need to ask the speed.
+	# This model only use 4800bps.
 	speedsAllowed="4800"
-	nbrSpeeds=1
 	waitTimeoutCommand=16
-	echo "Speed set to 4800bps."
+	echo "Speed set to 4800 bps."
 else
 	speedsAllowed="9600 4800"
-	nbrSpeeds=2
 	waitTimeoutCommand=1
 	echo "Multiple speed testing mode."
 fi
@@ -140,12 +139,12 @@ do
 	if [ $success -eq 0 ]
 	then
 		echo "Dialogue with Pioneer autochanger FAILED!"
-		echo "Verification Hints and Troubleshooting:"
+		echo "Verification hints and troubleshooting:"
 		echo -e "\t- Check autochanger power."
 		echo -e "\t- Check serial cable connection."
 		echo -e "\t- For V3000 & V3200 models : "
 		echo -e "\t\t- Be sure the first player address is 1 (factory setting - see manual page 14)."
-		echo -e "\t\t- Be sure the back "CONFIG." slider selector is on RS-232C position (= up)."
+		echo -e "\t\t- Be sure the back CONFIG. slider selector is on RS-232C position (= up)."
 		echo ""
 		echo "Try again ? Y(es) or any other key for no."
 		read -s -n 1 choice
@@ -158,7 +157,6 @@ do
 		fi
 	fi
 done
-#REPL part
 echo "Dialogue with Pioneer autochanger SUCCEEDED!"
 echo "Do you want to send custom commands (manual mode) now? Y(es) or any other key for no."
 read -s -n 1 choice
@@ -167,7 +165,8 @@ then
 	echo "Goodbye."
 	exit 0
 fi	
-echo "Manual mode entered! Type your autochanger command and press Enter (for each one).
+#REPL part
+echo "Manual mode entered. Type your autochanger command and press Enter (for each one).
 Warning: All chars will be sent as is! There is no verification.
 Type 'exit' to terminate this program. Timeout for a command reply is set to $waitTimeoutCommand second(s)."
 while true
