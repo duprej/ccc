@@ -1,19 +1,21 @@
 #!/bin/bash
 ### ####################################################################### ###
 ###
-###  Author:		Jonathan DUPRE
-###  GitHub:		https://github.com/duprej/ccc
-###  Commands :  	udevadm / stty
-###  Created at :  	09/30/2020 - 1.0 - Initial
-###  Revised on :  	10/11/2020 - 1.1 - Does not work, now it's ok :)
+###  Author:        Jonathan DUPRE
+###  GitHub:        https://github.com/duprej/ccc
+###  Commands :     udevadm / stty
+###  Created at :   09/30/2020 - 1.0 - Initial
+###  Revised on :   10/11/2020 - 1.1 - Does not work, now it's ok :)
 ###                                  - More hints and helps (user-friendly)
 ###                                  - Better tolerance to question answers
 ###                                  - Adaptive wait time in manual mode
 ###                                    (CM3 vs CM7).
 ###                 10/12/2020 - 1.2 - Various optimisations
-
+###                 10/25/2020 - 1.3 - Add grep -v to serial port listing for
+###                                    avoid counting redirected ports (->)
+###
 ### ####################################################################### ###
-SVERSION=1.2
+SVERSION=1.3
 echo -e "Welcome to CCC autochanger serial checker script v${SVERSION} for Linux.\n"
 if ! command -v udevadm &> /dev/null
 then
@@ -28,7 +30,7 @@ fi
 echo "This tiny script is interactive and will ask you some questions."
 echo -n "Listing serial ports... "
 ports=`ls /dev/ | grep -e 'tty[AUS]'`
-nbrPorts=`ls -l /dev/ | grep -e 'tty[AUS]' | wc -l`
+nbrPorts=`ls -l /dev/ | grep -e 'tty[AUS]' | grep -v '>' | wc -l`
 if [ $nbrPorts == "0" ]
 then
 	echo -e "\nSorry no serial port found. Check machine."
