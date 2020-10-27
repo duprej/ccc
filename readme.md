@@ -46,8 +46,7 @@ CCC is a complex architecture for reguler users but powerful and versatile for m
 ![Topologies](images/cccTopologies.gif)
 
 ## Hardware installation
-First you have to find a PC computer or a Single Board Computer (like a Raspberry Pi / Orange Pi / Banana Pi...) that will act as a tiny server and connects your autochangers to it with RS-232/422<->USB adapters.
-For my part, I used an old laptop like this :
+First you have to find a PC computer or a Single Board Computer (like a Raspberry Pi / Orange Pi / Banana Pi...) that will act as a tiny server and connects your autochangers to it with RS-232/422<->USB adapters. For my part, I used an old laptop like this :
 
 ![Installation](images/cacHardware.jpg)
 
@@ -64,6 +63,8 @@ With this solution, your autochangers can be controlled remotely on your LAN/WLA
 
 ## Linux first
 This software/scripts are written to be used in a Linux environment. I planed to use a Raspberry Pi in the long term espacialy for it simplicity, fair price, free software and energy consumption efficiency. I just share the work I have done with my autochangers @home. Windows & MacOS support are clearly not my priority for now.
+
+The procedure can be found in the [raspberry.md](./raspberry.md) document.
 
 ## Usage
 * Install Linux with or without a Desktop Environment (prefer Ubuntu/Debian or Raspbian/Armbian) with bash and Perl.
