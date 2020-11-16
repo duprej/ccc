@@ -6,9 +6,7 @@ See the [startupGuide.pdf](./startupGuide.pdf) document for quick start guide ab
 Official user manuals are located in the [manuals](./manuals/) directory.
 Serial programming manuals are located in the [programming](./programming/) directory.
 
-**CCC is not an official Pioneer software.**
-
-**This repository contains only documentation and some basic tools.**
+**CCC is not an official Pioneer software. This repository contains only documentation and some basic tools.**
 
 
 ## serialcheck Tool
@@ -17,7 +15,7 @@ You can download and use the interactive [serialcheck.sh](./serialcheck.sh) Bash
 
 
 ## At a glance
-CAC is an accronym for dedicated Pioneer CD Autochangers CAC-Vxxxx models.
+CAC is an accronym for dedicated Pioneer CD Autochangers CAC-V180M, V3000, V3200 and V5000 models.
 This is the root directory for each modules of the CCC project. 
 To understand CCC modules take a look at them (low level to high level) :
 
@@ -40,13 +38,13 @@ Complexity and features will grow crescendo.
 | CCCcontroller | middle     | yes  | no                 | no          | smart/efficient |
 | CCCweb        | high       | yes  | yes                | yes         | smart/efficient |
 
-## Topologies/Urbanization
+## Topologies/Urbanisation
 CCC is a complex architecture for reguler users but powerful and versatile for many usages. Modules can be distributed where you want. Of course you can put all modules on an unique computer for easy use.
 
 ![Topologies](images/cccTopologies.gif)
 
 ## Hardware installation
-First you have to find a PC computer or a Single Board Computer (like a Raspberry Pi / Orange Pi / Banana Pi...) that will act as a tiny server and connects your autochangers to it with RS-232/422<->USB adapters. For my part, I used an old laptop like this :
+You can use a real PC computer or a Single Board Computer (like a Raspberry Pi / Orange Pi / Banana Pi...) that will act as a tiny server and connects your autochangers with RS-232C/422A<->USB adapters. For my part, I used an old Dell laptop like this :
 
 ![Installation](images/cacHardware.jpg)
 
@@ -55,7 +53,7 @@ All changers are connected to the computer via USB ports and serial adapters lik
 ![Image of USB adapter](images/cccSerial.jpg)
 
 ## The “pivot” concept
-CCC is a web-based JavaScript software suite, application modules runs in a web browser like Chrome, Brave, Opera or Firefox. But all of them can’t talk easily with a serial port (before USB accessibility API was developped). This is why there is a module named CCCpivot. To make a bridge between the RS-232C/422A autochanger connection and the TCP/IP/Ethernet network world.
+CCC is a web-based JavaScript software suite, application "modules" runs in a web browser like Chrome, Brave, Opera or Firefox. But all of them can’t talk easily with a serial port (before USB accessibility API was developped). This is why there is a module named CCCpivot. To make a bridge between the RS-232C/422A autochanger connection and the TCP/IP/Ethernet network world.
 
 ![Pivot](images/cccPivot.png)
 

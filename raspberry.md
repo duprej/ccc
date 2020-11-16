@@ -1,10 +1,20 @@
-#  Using CAC Control Center on a Raspberry Pi - Summary
-This procedure has been tested with success with:
-- Raspbian Lite (without Desktop) 5.4.51+ 08/2020 on Raspberry Pi Zero WH (armv6l) -> Very slow
-- Armbian 20.08.01 on OrangePi PC 1.2 (armv7l) -> OK
+#  Using CAC Control Center on a Raspberry Pi
+
+## Usage and performance
+
+I tested my Raspberry Pi Zero WH 1.1 (armv6l) to act as a Wi-Fi remote access control for my CAC-V5000 with the CCCpivot module. All is OK. Load average of CPU was about 0.20 and <50MB of RAM used in `htop` while communicating (without TLS and  node v10.19). So this tiny model (1× ARM1176JZF-S core of 1Ghz) will clearly do the job in this case.
+
+If you plan to put all modules on your Raspberry Pi, especialy future CCCweb and his database with a webserver, prefer buying a more powerfull model like the Rapsberry Pi 4 with 2 or 4GB of RAM.
+
+## Installation procedure
+
+This procedure has been tested with success:
+
+- Raspbian Lite (without Desktop) 5.4.51+ 08/2020 / Raspberry Pi Zero WH (armv6l)
+- Armbian 20.08.01 / OrangePi PC 1.2 (armv7l)
 
 ## 1 - Install Raspberry Pi OS or Armbian on the SDcard
-There is plenty of tutorials for that.
+There is plenty of tutorials for that. Use a good SDcard!
 
 ## 2 - Configure your SBC 
 Use 'raspi-config' or 'armbian-config' tool.
@@ -27,7 +37,7 @@ sudo systemctl start ssh
 
 - turn off wireless power management if you have dropouts problems.
 
-Add thid line to '/etc/rc.local' file (before exit 0):
+Add this line to '/etc/rc.local' file (before exit 0):
 ```console
 iwconfig wlan0 power off
 ```
@@ -41,14 +51,14 @@ sudo apt-get install nodejs npm
 Even if the version is not the last one (>=10).
 
 ## 5 - Connect your Pioneer CAC autochanger with serial cable
+See the [startupGuide.pdf](./startupGuide.pdf).
 
-## 6 - Download and launch serialcheck.sh tool
+## 6 - Download and launch serialcheck.sh (check tool)
 ```console
 wget https://raw.githubusercontent.com/duprej/ccc/main/serialcheck.sh
 bash serialcheck.sh
 ```
-
-Before continue confirm that all is right at this step. Example:
+Before continue, launch this script and confirm that you can control the autochanger at this step. Example:
 ```console
 pi@cacv5000:~ $ bash serialcheck.sh
 Welcome to CCC autochanger serial checker script v1.3 for Linux.
@@ -123,7 +133,7 @@ Install basic config files:
 sudo cp /opt/ccclauncher/conf/* /etc/
 ```
 
-Configure/Personalize theses files with a text editor (nano, vi,gedit...):
+Configure/Personalize theses files with a text editor (nano, vi, gedit...):
 
 ```console
 sudo vi /etc/ccclauncher.cfg
