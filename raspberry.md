@@ -1,10 +1,11 @@
 #  Using CAC Control Center on a Raspberry Pi
-
 ## Usage and performance
+I tested my Raspberry Pi Zero WH (armv6l) to act as a Wi-Fi remote access for my CAC-V5000 with the CCCpivot module. All is OK. Load average of CPU was about 0.20 and <60MB of RAM used in `htop` while communicating (without TLS and node v10.19). So this tiny old model (1×ARM1176JZF-S core of 1Ghz) will clearly do the job in this case.
+![Raspi Zero](images/raspiZero.png)
 
-I tested my Raspberry Pi Zero WH 1.1 (armv6l) to act as a Wi-Fi remote access control for my CAC-V5000 with the CCCpivot module. All is OK. Load average of CPU was about 0.20 and <50MB of RAM used in `htop` while communicating (without TLS and  node v10.19). So this tiny model (1× ARM1176JZF-S core of 1Ghz) will clearly do the job in this case.
+If you plan to put all modules on your Raspberry Pi, especialy future CCCweb and his database with a webserver, prefer buying a more powerfull model like the Rapsberry Pi 3 or 4 model.
 
-If you plan to put all modules on your Raspberry Pi, especialy future CCCweb and his database with a webserver, prefer buying a more powerfull model like the Rapsberry Pi 4 with 2 or 4GB of RAM.
+![Raspi Four](images/raspiFour.png)
 
 ## Installation procedure
 
@@ -13,8 +14,12 @@ This procedure has been tested with success:
 - Raspbian Lite (without Desktop) 5.4.51+ 08/2020 / Raspberry Pi Zero WH (armv6l)
 - Armbian 20.08.01 / OrangePi PC 1.2 (armv7l)
 
-## 1 - Install Raspberry Pi OS or Armbian on the SDcard
-There is plenty of tutorials for that. Use a good SDcard!
+## 1 - Install Raspberry Pi OS on the SDcard
+There is plenty of tutorials for that. 
+
+https://www.raspberrypi.org/documentation/installation/installing-images/
+
+Use a good SDcard!
 
 ## 2 - Configure your SBC 
 Use 'raspi-config' or 'armbian-config' tool.
@@ -154,5 +159,3 @@ ps -ef|grep node
 ```console
 sudo perl /opt/ccclauncher/launcher.pl status
 ```
-## 10 - Use CCCtester...
-To be finished...
