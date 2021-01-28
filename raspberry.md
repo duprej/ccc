@@ -111,11 +111,18 @@ If you don't have it installed:
 sudo apt-get install git
 ```
 ## 8 - Clone and install CCCpivot
+Tip to install lastest Node.js on armv6l (Raspberry Pi Zero) :
+```console
+wget https://unofficial-builds.nodejs.org/download/release/v14.15.4/node-v14.15.4-linux-armv6l.tar.xz
+tar -xvf node-v14.15.4-linux-armv6l.tar.xz -C /usr/ --strip 1
+node -v
+```
+
 ```console
 sudo -- bash  -c 'cd /opt && git clone https://github.com/duprej/cccpivot && cd /opt/cccpivot/ && npm install --unsafe-perm'
 ```
-## 9 - Clone, install, configure and use CCClauncher
 
+## 9 - Clone and configure CCClauncher
 ```console
 sudo -- bash  -c 'cd /opt;git clone https://github.com/duprej/ccclauncher'
 ```
