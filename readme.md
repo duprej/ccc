@@ -19,7 +19,6 @@
 | [pivot](https://github.com/duprej/cccpivot) | Node.js script which start a server to control a changer via RS-232C/422A through a websocket in web browsers.|
 | [launcher](https://github.com/duprej/ccclauncher) | Perl script to easily manage (start/status/stop) pivot instances like a Linux deamon.|
 | [tester](https://github.com/duprej/ccctester) | Static english web HTML/CSS/JS application to test and debug Node.js pivot instances.|
-| controller | Static web HTML/CSS/JS application to control changer's players (like DJ controller).|
 | web | Big application with Postgres database connection and persistance.|
 
 ![Image of CCCUniverse](images/cccUniverse.gif)
@@ -41,7 +40,6 @@ Complexity and features will grow crescendo.
 | application   | complexity | i18n | multiple changers  | persistance | status collection |
 |---------------|------------|------|--------------------|-------------| ------------------|
 | CCCtester     | low        | no   | no                 | no          | simple JS timer |
-| CCCcontroller | middle     | yes  | no                 | no          | smart/efficient |
 | CCCweb        | high       | yes  | yes                | yes         | smart/efficient |
 
 
