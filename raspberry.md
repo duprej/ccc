@@ -1,6 +1,8 @@
-#  Using CAC Control Center on a Raspberry Pi
+# Using CAC Control Center on a Raspberry Pi
+
 ## Usage and performance
-I tested my Raspberry Pi Zero WH (armv6l) to act as a Wi-Fi remote access for my CAC-V5000 with the CCCpivot module. All is OK. Load average of CPU was about 0.20 and <60MB of RAM used in `htop` while communicating (without TLS and node v10.19). So this tiny old model (1×ARM1176JZF-S core of 1Ghz) will clearly do the job in this case.
+
+I tested my Raspberry Pi Zero WH (armv6l) to act as a Wi-Fi remote access for my CAC-V5000 with the CCCpivot module. Load average of CPU was about 0.20 and <60MB of RAM used in `htop` while communicating (without TLS and node v10.19). So this tiny old model (1×ARM1176JZF-S core of 1Ghz) will clearly do the job in this case.
 ![Raspi Zero](images/raspiZero.png)
 
 If you plan to put all modules on your Raspberry Pi, especialy future CCCweb and his database with a webserver, prefer buying a more powerfull model like the Rapsberry Pi 3 or 4 model.
@@ -15,14 +17,17 @@ This procedure has been tested with success:
 - Armbian 20.08.01 / OrangePi PC 1.2 (armv7l)
 
 ## 1 - Install Raspberry Pi OS on the SDcard
-There is plenty of tutorials for that. 
 
-https://www.raspberrypi.org/documentation/installation/installing-images/
+There is plenty of tutorials for that.
 
-Use a good SDcard!
+<https://www.raspberrypi.org/documentation/installation/installing-images/>
 
-## 2 - Configure your SBC 
+Use a good SDcard.
+
+## 2 - Configure your SBC
+
 Use 'raspi-config' or 'armbian-config' tool.
+
 - Set passwords
 - SSH deamon
 - Localisation (Locale, TimeZone, Keyboard Map)
@@ -31,7 +36,8 @@ Use 'raspi-config' or 'armbian-config' tool.
 Please be sure you can access internet at this step.
 
 ## 3 - Some tips
-On Raspberry Pi OS: 
+
+On Raspberry Pi OS:
 
 - don't forget to enable ssh deamon to remote control your Raspi:
 
@@ -43,6 +49,7 @@ sudo systemctl start ssh
 - turn off wireless power management if you have dropouts problems.
 
 Add this line to '/etc/rc.local' file (before exit 0):
+
 ```console
 iwconfig wlan0 power off
 ```
@@ -50,20 +57,26 @@ iwconfig wlan0 power off
 Reboot and check with 'iwconfig wlan0' that Power Management is off.
 
 ## 4 - Install Node.js & NPM
+
 ```console
 sudo apt-get install nodejs npm
 ```
+
 Even if the version is not the last one (>=10).
 
 ## 5 - Connect your Pioneer CAC autochanger with serial cable
+
 See the [startupGuide.pdf](./startupGuide.pdf).
 
 ## 6 - Download and launch serialcheck.sh (check tool)
+
 ```console
 wget https://raw.githubusercontent.com/duprej/ccc/main/serialcheck.sh
 bash serialcheck.sh
 ```
+
 Before continue, launch this script and confirm that you can control the autochanger at this step. Example:
+
 ```console
 pi@cacv5000:~ $ bash serialcheck.sh
 Welcome to CCC autochanger serial checker script v1.3 for Linux.
@@ -105,13 +118,19 @@ Command: exit
 Goodbye.
 pi@cacv5000:~ $
 ```
+
 ## 7 - Check if you have git
+
 If you don't have it installed:
+
 ```console
 sudo apt-get install git
 ```
+
 ## 8 - Clone and install CCCpivot
+
 Tip to install lastest Node.js on armv6l (Raspberry Pi Zero) :
+
 ```console
 wget https://unofficial-builds.nodejs.org/download/release/v14.15.4/node-v14.15.4-linux-armv6l.tar.xz
 tar -xvf node-v14.15.4-linux-armv6l.tar.xz -C /usr/ --strip 1
@@ -123,6 +142,7 @@ sudo -- bash  -c 'cd /opt && git clone https://github.com/duprej/cccpivot && cd 
 ```
 
 ## 9 - Clone and configure CCClauncher
+
 ```console
 sudo -- bash  -c 'cd /opt;git clone https://github.com/duprej/ccclauncher'
 ```
@@ -163,6 +183,7 @@ Check if your CCCpivot processes are alive:
 ```console
 ps -ef|grep node
 ```
+
 ```console
 sudo perl /opt/ccclauncher/launcher.pl status
 ```
